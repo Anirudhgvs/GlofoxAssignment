@@ -7,6 +7,7 @@ import com.Assignment.repo.ClassesRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.NoSuchElementException;
 
@@ -28,7 +29,7 @@ public class Service {
     public ResponseEntity<Booking> addBooking(String memberName, String className, String date) throws Exception {
         Classes classes = classesRepo.findByClassName(className);
         if(classes == null){
-            throw new NoSuchElementException(className + " class doesn't exist");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, className + " class doesn't exist");
         }
         Booking booking = new Booking(null, memberName, date);
         booking = bookingRepo.save(booking);
