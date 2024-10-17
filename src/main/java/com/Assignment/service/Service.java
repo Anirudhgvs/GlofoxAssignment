@@ -9,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.NoSuchElementException;
-
 @org.springframework.stereotype.Service
 public class Service {
 
@@ -26,10 +24,10 @@ public class Service {
         return new ResponseEntity<>(classes, HttpStatus.OK);
     }
 
-    public ResponseEntity<Booking> addBooking(String memberName, String className, String date) throws Exception {
+    public ResponseEntity<Booking> addBookings(String memberName, String className, String date) throws Exception {
         Classes classes = classesRepo.findByClassName(className);
         if(classes == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, className + " class doesn't exist");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, className + " class doesn't exist");
         }
         Booking booking = new Booking(null, memberName, date);
         booking = bookingRepo.save(booking);

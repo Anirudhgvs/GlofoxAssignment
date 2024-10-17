@@ -1,5 +1,7 @@
 package com.Assignment.controller;
 
+import com.Assignment.dto.BookingRequest;
+import com.Assignment.dto.ClassRequest;
 import com.Assignment.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,25 +16,20 @@ public class Controller {
     private Service service;
 
     @PostMapping("/classes")
-    public ResponseEntity<?> addClasses(
-            @RequestParam(value = "className", required = false) String className,
-            @RequestParam(value = "startDate", required = false) String startDate,
-            @RequestParam(value = "endDate", required = false) String endDate,
-            @RequestParam(value = "capacity", required = false, defaultValue = "10") Integer capacity) {
+    public ResponseEntity<?> addClasses(@RequestBody ClassRequest classRequest) {
         try {
-            return service.addClasses(className, startDate, endDate, capacity);
+            return service.addClasses(classRequest.getClassName(), classRequest.getStartDate(), classRequest.getEndDate(), classRequest.getCapacity());
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
         }
     }
 
     @PostMapping("/bookings")
-    public ResponseEntity<?> addBooking(
-            @RequestParam(value = "memberName", required = false) String memberName,
-            @RequestParam(value = "className", required = false) String className,
-            @RequestParam(value = "date", required = false) String date) {
+    public ResponseEntity<?> addBookings(@RequestBody BookingRequest bookingRequest) {
         try {
-            return service.addBooking(memberName, className, date);
+            return service.addBookings(bookingRequest.getMemberName(), bookingRequest.getClassName(), bookingRequest.getDate());
         } catch (ResponseStatusException e) {
             return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
         } catch (Exception e) {
