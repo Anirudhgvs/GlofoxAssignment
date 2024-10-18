@@ -22,7 +22,7 @@ public class ClassRequest {
     @NotBlank(message = "end date is required")
     private String endDate;
 
-    @NotNull
+    @NotNull(message = "capacity must not be null")
     private Integer capacity;
 
 }
