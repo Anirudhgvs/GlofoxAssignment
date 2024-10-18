@@ -1,10 +1,10 @@
 package com.Assignment.Repository;
 
-import com.Assignment.Entity.Classes;
+import com.Assignment.Entity.Class;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ClassesRepo extends JpaRepository<Classes,Integer> {
+public interface ClassesRepo extends JpaRepository<Class,Integer> {
 
-    Classes findByClassName(String className);
+    Class findByClassName(String className);
 
 }

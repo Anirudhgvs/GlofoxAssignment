@@ -19,7 +19,8 @@ public class Controller {
     @PostMapping("/classes")
     public ResponseEntity<?> addClasses(@Valid @RequestBody ClassRequest classRequest) {
         try {
-            return service.addClasses(classRequest.getClassName(), classRequest.getStartDate(), classRequest.getEndDate(), classRequest.getCapacity());
+            service.addClass(classRequest.getClassName(), classRequest.getStartDate(), classRequest.getEndDate(), classRequest.getCapacity());
+            return new ResponseEntity<>("Class added successfully", HttpStatus.OK);
         } catch (ResponseStatusException e) {
             return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
         } catch (Exception e) {
@@ -30,7 +31,8 @@ public class Controller {
     @PostMapping("/bookings")
     public ResponseEntity<?> addBookings(@Valid @RequestBody BookingRequest bookingRequest) {
         try {
-            return service.addBookings(bookingRequest.getMemberName(), bookingRequest.getClassName(), bookingRequest.getDate());
+            service.addBooking(bookingRequest.getMemberName(), bookingRequest.getClassName(), bookingRequest.getDate());
+            return new ResponseEntity<>("Booking successful", HttpStatus.OK);
         } catch (ResponseStatusException e) {
             return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
         } catch (Exception e) {

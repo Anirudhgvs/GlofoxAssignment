@@ -4,7 +4,7 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.Assignment.Entity.Booking;
-import com.Assignment.Entity.Classes;
+import com.Assignment.Entity.Class;
 import com.Assignment.Repository.BookingRepo;
 import com.Assignment.Repository.ClassesRepo;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,35 +35,33 @@ public class ServiceTest {
     @Test
     public void testAddClasses_Success() {
         // Arrange
-        Classes classes = new Classes(null, "Yoga", "2024-10-01", "2024-10-30", 20);
-        when(classesRepo.save(any(Classes.class))).thenReturn(classes);
+        Class aClass = new Class(null, "Yoga", "2024-10-01", "2024-10-30", 20);
+        when(classesRepo.save(any(Class.class))).thenReturn(aClass);
 
         // Act
-        ResponseEntity<Classes> response = service.addClasses("Yoga", "2024-10-01", "2024-10-30", 20);
+        Class response = service.addClass("Yoga", "2024-10-01", "2024-10-30", 20);
 
         // Assert
         assertNotNull(response);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Yoga", response.getBody().getClassName());
-        verify(classesRepo, times(1)).save(any(Classes.class));
+        assertEquals("Yoga", response.getClassName());
+        verify(classesRepo, times(1)).save(any(Class.class));
     }
 
     @Test
     public void testAddBookings_Success() throws Exception {
         // Arrange
-        Classes yogaClass = new Classes(1, "Yoga", "2024-10-01", "2024-10-30", 20);
+        Class yogaClass = new Class(1, "Yoga", "2024-10-01", "2024-10-30", 20);
         when(classesRepo.findByClassName("Yoga")).thenReturn(yogaClass);
 
         Booking booking = new Booking(null, "John Doe", "2024-10-10");
         when(bookingRepo.save(any(Booking.class))).thenReturn(booking);
 
         // Act
-        ResponseEntity<Booking> response = service.addBookings("John Doe", "Yoga", "2024-10-10");
+        Booking response = service.addBooking("John Doe", "Yoga", "2024-10-10");
 
         // Assert
         assertNotNull(response);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("John Doe", response.getBody().getMemberName());
+        assertEquals("John Doe", response.getMemberName());
         verify(bookingRepo, times(1)).save(any(Booking.class));
         verify(classesRepo, times(1)).findByClassName("Yoga");
     }
@@ -75,7 +73,7 @@ public class ServiceTest {
 
         // Act & Assert
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
-            service.addBookings("John Doe", "NonExistentClass", "2024-10-10");
+            service.addBooking("John Doe", "NonExistentClass", "2024-10-10");
         });
 
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
