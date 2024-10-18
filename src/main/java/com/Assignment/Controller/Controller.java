@@ -1,8 +1,9 @@
-package com.Assignment.controller;
+package com.Assignment.Controller;
 
-import com.Assignment.dto.BookingRequest;
-import com.Assignment.dto.ClassRequest;
-import com.Assignment.service.Service;
+import com.Assignment.DTO.BookingRequest;
+import com.Assignment.DTO.ClassRequest;
+import com.Assignment.Service.Service;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ public class Controller {
     private Service service;
 
     @PostMapping("/classes")
-    public ResponseEntity<?> addClasses(@RequestBody ClassRequest classRequest) {
+    public ResponseEntity<?> addClasses(@Valid @RequestBody ClassRequest classRequest) {
         try {
             return service.addClasses(classRequest.getClassName(), classRequest.getStartDate(), classRequest.getEndDate(), classRequest.getCapacity());
         } catch (ResponseStatusException e) {
@@ -27,7 +28,7 @@ public class Controller {
     }
 
     @PostMapping("/bookings")
-    public ResponseEntity<?> addBookings(@RequestBody BookingRequest bookingRequest) {
+    public ResponseEntity<?> addBookings(@Valid @RequestBody BookingRequest bookingRequest) {
         try {
             return service.addBookings(bookingRequest.getMemberName(), bookingRequest.getClassName(), bookingRequest.getDate());
         } catch (ResponseStatusException e) {

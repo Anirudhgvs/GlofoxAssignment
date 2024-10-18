@@ -1,5 +1,7 @@
-package com.Assignment.dto;
+package com.Assignment.DTO;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,9 +13,16 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ClassRequest {
 
+    @NotBlank(message = "class name is required")
     private String className;
+
+    @NotBlank(message = "start date is required")
     private String startDate;
+
+    @NotBlank(message = "end date is required")
     private String endDate;
+
+    @NotNull
     private Integer capacity;
 
 }

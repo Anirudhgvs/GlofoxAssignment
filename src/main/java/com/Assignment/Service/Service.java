@@ -1,9 +1,9 @@
-package com.Assignment.service;
+package com.Assignment.Service;
 
-import com.Assignment.entity.Booking;
-import com.Assignment.entity.Classes;
-import com.Assignment.repo.BookingRepo;
-import com.Assignment.repo.ClassesRepo;
+import com.Assignment.Entity.Booking;
+import com.Assignment.Entity.Classes;
+import com.Assignment.Repository.BookingRepo;
+import com.Assignment.Repository.ClassesRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
